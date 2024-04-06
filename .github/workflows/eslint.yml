@@ -34,4 +34,4 @@ jobs:
             run: npx eslint .
                  --config .eslintrc.cjs  
                  --ext .js,.jsx,.ts,.tsx
-            continue-on-error: true
+            continue-on-error: false
