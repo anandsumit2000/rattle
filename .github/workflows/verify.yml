@@ -1,7 +1,7 @@
-name: ESLint
+name: ESLint and Terraform Verify
 
 on:
-    workflow_dispatch:
+    # workflow_dispatch:
 
     push:
         branches: ["main"]
@@ -20,7 +20,7 @@ jobs:
           - name: Repository checkout
             uses: actions/checkout@v3
 
-          - name: Configure Runtime
+          - name: Configure Node Runtime
             uses: actions/setup-node@v2
             with:
                 node-version: '20'
@@ -35,3 +35,19 @@ jobs:
                  --config .eslintrc.cjs  
                  --ext .js,.jsx,.ts,.tsx
             continue-on-error: false
+
+    verify:
+      runs-on: ubuntu-latest
+
+      steps: 
+        - name: Repository checkout
+          uses: actions/checkout@v3
+
+        - name: Configure Terraform
+          uses: hashicorp/setup-terraform@v3
+          with:
+            terraform-version: 1.4.0
+
+        - name: Terraform FMT
+          working-directory: ./dockerize-sample-app/terraform
+          run: terraform fmt -check -recursive  
