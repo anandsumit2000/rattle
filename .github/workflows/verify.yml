@@ -18,7 +18,7 @@ jobs:
 
         steps:
           - name: Repository checkout
-            uses: actions/checkout@v3
+            uses: actions/checkout@v4
 
           - name: Configure Node Runtime
             uses: actions/setup-node@v3
@@ -37,17 +37,18 @@ jobs:
             continue-on-error: false
 
     verify:
-      runs-on: ubuntu-latest
+        name: Terraform fmt check
+        runs-on: ubuntu-latest
+  
+        steps: 
+          - name: Repository checkout
+            uses: actions/checkout@v4
+  
+          - name: Configure Terraform
+            uses: hashicorp/setup-terraform@v3
+            with:
+              terraform_version: 1.4.0
 
-      steps: 
-        - name: Repository checkout
-          uses: actions/checkout@v3
-
-        - name: Configure Terraform
-          uses: hashicorp/setup-terraform@v3
-          with:
-            terraform_version: 1.4.0
-
-        - name: Terraform FMT
-          working-directory: ./dockerize-sample-app/terraform
-          run: terraform fmt -check -recursive  
+          - name: Terraform FMT
+            working-directory: ./dockerize-sample-app/terraform
+            run: terraform fmt -check -recursive  
