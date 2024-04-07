@@ -1,7 +1,7 @@
 name: ESLint and Terraform Verify
 
 on:
-    # workflow_dispatch:
+    workflow_dispatch:
 
     push:
         branches: ["main"]
@@ -21,7 +21,7 @@ jobs:
             uses: actions/checkout@v3
 
           - name: Configure Node Runtime
-            uses: actions/setup-node@v2
+            uses: actions/setup-node@v3
             with:
                 node-version: '20'
         
@@ -46,7 +46,7 @@ jobs:
         - name: Configure Terraform
           uses: hashicorp/setup-terraform@v3
           with:
-            terraform-version: 1.4.0
+            terraform_version: 1.4.0
 
         - name: Terraform FMT
           working-directory: ./dockerize-sample-app/terraform
