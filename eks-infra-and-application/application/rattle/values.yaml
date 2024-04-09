@@ -1,0 +1,13 @@
+replicaCount: 2
+image:
+  repository: anandsumit2000/rattle
+  tag: 1.1
+  pullPolicy: Always
+
+service:
+  name: rattle-load-balancer
+  type: LoadBalancer
+  port: 80
+  targetPort: 80
+  protocol: TCP
+  nodePort: 31000
