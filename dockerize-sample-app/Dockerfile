@@ -1,27 +1,17 @@
-## Stage 1: BUILD
-
-FROM node:slim as BUILD_IMAGE
+FROM node:alpine
 
 WORKDIR /app
 
-COPY . /app
+COPY package.json ./
+
+COPY package-lock.json ./
 
 RUN npm install
 
-CMD [ "npm", "run", "build" ]
+COPY ./ ./
 
-## Stage 2: 
+CMD ["npm", "start"]
 
-FROM node:slim as DEPLOYMENT_IMAGE
+FROM nginx:alpine
 
-WORKDIR /app
-
-COPY --from=BUILD_IMAGE /app/ /app/
-
-COPY package.json .
-
-COPY vite.config.js .
-
-EXPOSE 5000
-
-CMD [ "npm", "run", "preview" ]
+COPY dist/ /usr/share/nginx/html
