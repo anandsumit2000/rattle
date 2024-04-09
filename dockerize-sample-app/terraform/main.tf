@@ -10,8 +10,9 @@ provider "docker" {
 }
 
 resource "docker_image" "image" {
-  name = "${var.profile_name}/${var.image_name}"
+  name = "${var.profile_name}/${var.image_name}:${var.tag}"
   build {
+    platform   = "linux/amd64"
     context    = "../"
     dockerfile = "Dockerfile"
     tag        = ["registry-1.docker.io/${var.profile_name}/${var.image_name}:${var.tag}"]
